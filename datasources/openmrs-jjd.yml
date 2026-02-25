@@ -1,0 +1,8 @@
+databaseType: "mysql"
+host: ${datasources.openmrs.jjd.host}
+port: ${datasources.openmrs.jjd.port}
+databaseName: ${datasources.openmrs.jjd.databaseName}
+user: ${datasources.openmrs.jjd.user}
+password: ${datasources.openmrs.jjd.password}
+options: ${datasources.openmrs.jjd.options}
+containerName: ${datasources.openmrs.jjd.containerName}

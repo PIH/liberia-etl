@@ -1,0 +1,8 @@
+databaseType: "mysql"
+host: ${datasources.openmrs.pleebo.host}
+port: ${datasources.openmrs.pleebo.port}
+databaseName: ${datasources.openmrs.pleebo.databaseName}
+user: ${datasources.openmrs.pleebo.user}
+password: ${datasources.openmrs.pleebo.password}
+options: ${datasources.openmrs.pleebo.options}
+containerName: ${datasources.openmrs.pleebo.containerName}
