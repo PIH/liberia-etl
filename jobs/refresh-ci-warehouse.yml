@@ -1,0 +1,19 @@
+type: "job-pipeline"
+description: "Refreshing OpenMRS Data for Liberia CI"
+configuration:
+  jobs:
+    - type: "iterating-job"
+      description: "Extracting Data from Liberia Sites"
+      configuration:
+        iterations:
+          - siteName: "jjd"
+        jobTemplate:
+          path: "refresh-${siteName}.yml"
+          
+    - type: "iterating-job"
+      description: "Create final derived tables"
+      configuration:
+        jobTemplate:
+          path: "create-derived-table-in-warehouse.yml"
+        iterations:
+          - tableName: "dim_date"

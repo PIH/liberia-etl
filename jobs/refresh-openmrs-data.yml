@@ -1,0 +1,23 @@
+type: "job-pipeline"
+description: "Refreshing OpenMRS Data for Liberia"
+schedule:
+  cron: "${executeCron.refreshOpenmrsData}"
+configuration:
+  jobs:
+    - type: "iterating-job"
+      description: "Extracting Data from Liberia Sites"
+      configuration:
+        maxConcurrentJobs: 5
+        iterations:
+          - siteName: "pleebo"
+          - siteName: "jjd"
+        jobTemplate:
+          path: "refresh-${siteName}.yml"
+          
+    - type: "iterating-job"
+      description: "Create final derived tables"
+      configuration:
+        jobTemplate:
+          path: "create-derived-table-in-warehouse.yml"
+        iterations:
+          - tableName: "dim_date"

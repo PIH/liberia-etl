@@ -1,0 +1,8 @@
+type: "iterating-job"
+description: "Refresh JJD Data"
+configuration:
+  iterations:
+    - siteName: "jjd"
+      partitionNum: "2"
+  jobTemplate:
+    path: "refresh-base-tables.yml"

@@ -1,0 +1,8 @@
+type: "iterating-job"
+description: "Refresh Pleebo Data"
+configuration:
+  iterations:
+    - siteName: "pleebo"
+      partitionNum: "1"
+  jobTemplate:
+    path: "refresh-base-tables.yml"
