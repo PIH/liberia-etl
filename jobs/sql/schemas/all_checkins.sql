@@ -1,6 +1,8 @@
 CREATE TABLE all_checkins (
     emr_id                   VARCHAR(50),
-    encounter_id             INT,
+    encounter_id             VARCHAR(50),
+    patient_id               VARCHAR(50),
+    visit_id                 VARCHAR(50),    
     encounter_datetime       DATETIME,
     encounter_location       VARCHAR(255),
     datetime_entered         DATETIME,
