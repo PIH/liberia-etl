@@ -1,4 +1,4 @@
-CREATE TABLE all_encounters_etl (
+CREATE TABLE all_encounters (
     encounter_id        VARCHAR(50),
     patient_id          VARCHAR(50),
     visit_id            VARCHAR(50),
