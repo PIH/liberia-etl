@@ -17,3 +17,4 @@ configuration:
           path: "create-derived-table-in-warehouse.yml"
         iterations:
           - tableName: "dim_date"
+          - tableName: "update_index"
