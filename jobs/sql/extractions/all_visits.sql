@@ -144,7 +144,7 @@ lab_collection_encounter,
 vitals_encounter,
 consult_encounter,
 first_visit_this_year,
-number_of_encounters
+number_of_encounters,
 index_asc,
 index_desc
 from temp_visits;
