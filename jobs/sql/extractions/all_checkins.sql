@@ -19,7 +19,9 @@ reason_of_visit        varchar(255),
 referred_or_escorted   varchar(255), 
 referred_by            varchar(255), 
 escorting_person_name  text,         
-escorting_person_phone text);        
+escorting_person_phone text,
+index_asc              int,
+index_desc             int);        
 
 INSERT INTO checkin_details(patient_id,emr_id,encounter_id, visit_id, encounter_datetime,encounter_location,datetime_entered,user_entered,encounter_provider)
 SELECT 
@@ -85,6 +87,8 @@ SELECT
 	referred_or_escorted,
 	referred_by,
 	escorting_person_name,
-	escorting_person_phone
-	FROM checkin_details
+	escorting_person_phone,
+	index_asc,
+	index_desc
+FROM checkin_details
 ORDER BY encounter_id desc;
