@@ -12,5 +12,7 @@ CREATE TABLE all_checkins (
     referred_or_escorted     VARCHAR(255),
     referred_by              VARCHAR(255),
     escorting_person_name    TEXT,
-    escorting_person_phone   Text
+    escorting_person_phone   TEXT,
+    index_asc                INT,
+    index_desc               INT
 );
