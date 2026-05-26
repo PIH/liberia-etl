@@ -24,3 +24,4 @@ configuration:
           - tableName: "all_patients" 
           - tableName: "all_diagnoses"           
           - tableName: "all_checkins"   
+          - tableName: "all_visits"   
