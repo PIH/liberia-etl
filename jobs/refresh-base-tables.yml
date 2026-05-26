@@ -20,3 +20,4 @@ configuration:
           - tableName: "user_roles"
           - tableName: "user_logins"
           - tableName: "petl_summary_db_restore"
+          - tableName: "all_encounters" 
