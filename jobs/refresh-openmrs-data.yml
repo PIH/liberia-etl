@@ -22,3 +22,4 @@ configuration:
         iterations:
           - tableName: "dim_date"
           - tableName: "update_index"
+          - tableName: "update_patient_url"
