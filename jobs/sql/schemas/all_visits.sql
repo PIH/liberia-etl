@@ -1,13 +1,21 @@
-CREATE TABLE all_visits (
-    patient_id           VARCHAR(50),
-    emr_id               VARCHAR(50),
-    visit_id             VARCHAR(50),
-    visit_date_started   DATETIME,
-    visit_date_stopped   DATETIME,
-    datetime_entered     DATETIME,
-    user_entered         VARCHAR(255),
-    visit_type           VARCHAR(255),
-    visit_location       VARCHAR(255),
-    index_asc            INT,
-    index_desc           INT
-);
+CREATE TABLE all_visits( 
+       patient_id               VARCHAR(50),  
+       emr_id                   VARCHAR(50),  
+       visit_id                 VARCHAR(50),  
+       visit_date_started       DATETIME,     
+       visit_date_stopped       DATETIME,     
+       datetime_entered         DATETIME,     
+       user_entered             VARCHAR(255), 
+       visit_type               VARCHAR(255), 
+       visit_location           VARCHAR(255), 
+       mh_or_epilepsy_encounter bit,            
+       ncd_encounter            bit,            
+       anc_encounter            bit,            
+       lab_collection_encounter bit,            
+       vitals_encounter         bit,            
+       consult_encounter        bit,            
+       first_visit_this_year    bit,            
+       number_of_encounters     int,            
+       index_asc                INT,          
+       index_desc               INT           
+); 
