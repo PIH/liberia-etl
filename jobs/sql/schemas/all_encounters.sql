@@ -1,0 +1,23 @@
+CREATE TABLE all_encounters_etl (
+    encounter_id        VARCHAR(50),
+    patient_id          VARCHAR(50),
+    visit_id            VARCHAR(50),
+    emr_id              VARCHAR(50),
+    encounter_type      VARCHAR(50),
+    encounter_location  VARCHAR(255),
+    provider            TEXT,
+    provider_role       VARCHAR(255),
+    encounter_datetime  DATETIME,
+    datetime_entered    DATETIME,
+    user_entered        VARCHAR(50),
+    users_modified      TEXT,
+    dates_modified      TEXT,
+    age_at_encounter    INT,
+    disposition         VARCHAR(255),
+    next_appt_date      DATE,
+    retrospective       BIT,
+    entry_lag_hours     INT,
+    new_patient         BIT,
+    index_asc           INT,
+    index_desc          INT
+);
