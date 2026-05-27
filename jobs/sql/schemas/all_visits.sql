@@ -1,4 +1,4 @@
-CREATE TABLE all_visits( 
+CREATE TABLE all_visits (
        patient_id               VARCHAR(50),
        emr_id                   VARCHAR(50),
        visit_id                 VARCHAR(50),
