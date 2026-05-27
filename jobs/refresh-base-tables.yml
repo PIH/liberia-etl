@@ -26,3 +26,4 @@ configuration:
           - tableName: "all_vitals"
           - tableName: "all_checkins"   
           - tableName: "all_visits"   
+          - tableName: "all_programs"

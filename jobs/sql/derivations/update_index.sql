@@ -63,3 +63,16 @@ set t.index_asc = i.index_asc,
     t.index_desc = i.index_desc
 from all_visits t inner join #derived_indexes i on i.visit_id = t.visit_id
 ;
+-- update patient  index asc/desc on all_programs table
+drop table if exists #derived_indexes;
+select  patient_program_id,
+        ROW_NUMBER() over (PARTITION by patient_id order by date_enrolled, patient_program_id) as index_asc,
+        ROW_NUMBER() over (PARTITION by patient_id order by date_enrolled DESC, patient_program_id DESC) as index_desc
+into    #derived_indexes
+from    all_programs;
+
+update t
+set t.index_asc = i.index_asc,
+    t.index_desc = i.index_desc
+from all_programs t inner join #derived_indexes i on i.patient_program_id = t.patient_program_id
+;
