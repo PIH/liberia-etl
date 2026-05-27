@@ -37,6 +37,19 @@ set t.index_asc = i.index_asc,
     t.index_desc = i.index_desc
 from all_checkins t inner join #derived_indexes i on i.encounter_id = t.encounter_id
 ;
+-- update index asc/desc on all_vitals table
+drop table if exists #derived_indexes;
+select  encounter_id,
+        ROW_NUMBER() over (PARTITION by patient_id order by encounter_datetime, encounter_id) as index_asc,
+        ROW_NUMBER() over (PARTITION by patient_id order by encounter_datetime DESC, encounter_id DESC) as index_desc
+into    #derived_indexes
+from    all_vitals;
+
+update t
+set t.index_asc = i.index_asc,
+    t.index_desc = i.index_desc
+from all_vitals t inner join #derived_indexes i on i.encounter_id = t.encounter_id
+;
 -- update index asc/desc on all_visits table
 drop table if exists #derived_indexes;
 select  visit_id,
