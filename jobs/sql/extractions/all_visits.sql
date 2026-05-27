@@ -128,9 +128,9 @@ inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encoun
 set lab_collection_encounter = 1;
 
 select
-concat(@partition,"-",patient_id) patient_id,
+concat(@partition,"-",patient_id) as patient_id,
 emr_id,
-concat(@partition,"-",visit_id),
+concat(@partition,"-",visit_id) as visit_id,
 visit_date_started,
 visit_date_stopped,
 datetime_entered,
