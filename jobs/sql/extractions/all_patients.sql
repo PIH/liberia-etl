@@ -65,6 +65,9 @@ set t.gender = p.gender,
 	t.last_modified_person_datetime = COALESCE(date_changed,date_created),
     t.patient_uuid = p.uuid;
 
+update temp_patients t 
+set t.cause_of_death = concept_name(cause_of_death_concept_id, @locale);
+
 -- name info
 update temp_patients t
 inner join person_name n on n.person_name_id =
