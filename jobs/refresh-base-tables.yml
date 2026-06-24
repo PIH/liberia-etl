@@ -1,4 +1,4 @@
-# Template that takes in the following parameters
+  # Template that takes in the following parameters
 # ${siteName}
 # ${partitionNum}
 # The purpose of this job is to refresh all DW table that are shared across multiple servers
@@ -30,3 +30,4 @@ configuration:
           - tableName: "data_warnings"
           - tableName: "mh_patients"
           - tableName: "mh_visits"
+          - tableName: "mh_diagnoses"
