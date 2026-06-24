@@ -5,7 +5,7 @@ CASE
 		concat('https://kouka.pih-emr.org/openmrs/coreapps/clinicianfacing/patient.page?patientId=', patient_uuid)
 	when site = 'pleebo' then
 		concat('https://pleebo.pih-emr.org/openmrs/coreapps/clinicianfacing/patient.page?patientId=', patient_uuid)
-	when site = 'jjdossen' then
+	when site = 'jjd' then
 		concat('https://jjdossen.pih-emr.org/openmrs/coreapps/clinicianfacing/patient.page?patientId=', patient_uuid)
 END
 from all_patients ap ;
