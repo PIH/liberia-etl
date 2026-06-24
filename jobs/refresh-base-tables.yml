@@ -32,3 +32,4 @@ configuration:
           - tableName: "mh_visits"
           - tableName: "mh_diagnoses"
           - tableName: "mh_medications"
+          - tableName: "epilepsy_visits"
