@@ -28,3 +28,4 @@ configuration:
           - tableName: "all_visits"   
           - tableName: "all_programs"
           - tableName: "data_warnings"
+          - tableName: "mh_patients"
