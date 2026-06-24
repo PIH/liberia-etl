@@ -31,3 +31,4 @@ configuration:
           - tableName: "mh_patients"
           - tableName: "mh_visits"
           - tableName: "mh_diagnoses"
+          - tableName: "mh_medications"
