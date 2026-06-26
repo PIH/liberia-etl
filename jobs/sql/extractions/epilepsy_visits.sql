@@ -92,7 +92,7 @@ FROM (SELECT
       FROM epilepsy_export,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id ASC, encounter_id ASC, encounter_datetime ASC
+            ORDER BY patient_id ASC, encounter_datetime ASC, encounter_id ASC
         ) index_asc );
 
 UPDATE epilepsy_export t
@@ -116,7 +116,7 @@ FROM (SELECT
       FROM epilepsy_export,
                     (SELECT @r:= 1) AS r,
                     (SELECT @u:= 0) AS u
-            ORDER BY patient_id ASC, encounter_id ASC, encounter_datetime ASC
+            ORDER BY patient_id ASC, encounter_datetime DESC, encounter_id DESC
         ) index_desc );
 
 UPDATE epilepsy_export t

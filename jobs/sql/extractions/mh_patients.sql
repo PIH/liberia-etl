@@ -138,8 +138,7 @@ set @counseling_plan = CONCEPT_FROM_MAPPING('PIH', '14479');
 UPDATE temp_mh_patients tmh
 INNER JOIN temp_obs o ON tmh.patient_id = o.person_id
 AND o.concept_id = @counseling_plan
-SET tmh.counseling_plan = o.value_text
-WHERE o.value_text = 0;
+SET tmh.counseling_plan = o.value_text;
 
 set @mh_diagnoses = concept_from_mapping('PIH','7942');
 DROP temporary table IF EXISTS temp_mh_dx_set;
