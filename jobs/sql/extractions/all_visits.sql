@@ -127,6 +127,21 @@ update temp_visits tv
 inner join encounter e on e.visit_id = tv.visit_id and e.voided = 0 and e.encounter_type = @specimenCollectionEncTypeId
 set lab_collection_encounter = 1;
 
+drop temporary table if exists temp_visits_dates;
+create temporary table temp_visits_dates
+select patient_id, visit_id, visit_date_started from temp_visits;
+
+create index temp_visits_dates_c1 on temp_visits_dates(patient_id,visit_date_started);
+
+update temp_visits tv 
+set tv.first_visit_this_year = 1
+where not EXISTS 
+	(select 1 from temp_visits_dates vd 
+	where vd.patient_id = tv.patient_id
+	and vd.visit_date_started < tv.visit_date_started
+	and YEAR(vd.visit_date_started) = YEAR(tv.visit_date_started)
+	and vd.visit_id <> tv.visit_id);
+
 select
 concat(@partition,"-",patient_id) as patient_id,
 emr_id,
