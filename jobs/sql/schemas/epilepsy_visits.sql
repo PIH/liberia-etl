@@ -3,6 +3,7 @@ create table epilepsy_visits
   patient_id            varchar(50),
   emr_id                varchar(50),
   encounter_id          varchar(50),
+  encounter_type        varchar(255),
   encounter_date        date,
   provider_name         varchar(255),
   encounter_location    varchar(255),
