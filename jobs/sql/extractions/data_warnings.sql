@@ -76,6 +76,21 @@ and not exists
 and unknown_patient(p.patient_id) is null;
 
 insert into temp_reg (patient_id, datetime_entered, creator, warning_type)
+select patient_id, p.date_created, p.creator, 'missing country or county'
+from patient p
+where person_address_country(p.patient_id ) is null
+or (person_address_state_province(p.patient_id) is null and  person_address_country(p.patient_id ) = 'Liberia');
+
+drop temporary table if exists temp_ids;
+CREATE TEMPORARY TABLE temp_ids AS
+SELECT patient_id FROM temp_reg
+WHERE warning_type = 'blank address';
+
+DELETE FROM temp_reg
+WHERE warning_type = 'missing country or county'
+AND patient_id IN (SELECT patient_id FROM temp_ids);
+
+insert into temp_reg (patient_id, datetime_entered, creator, warning_type)
 select patient_id, p.date_created, p.creator, 'blank name'
 from patient p
 where p.voided = 0 
@@ -167,7 +182,7 @@ inner join encounter e on e.patient_id = le.patient_id and le.latest_datetime = 
 where timestampdiff(YEAR, p.birthdate , encounter_datetime) >105
 ;
 
---- ------------------------ common fields
+-- ------------------------- common fields
 -- emr_id
 set @primary_emr_id_type_uuid =  metadata_uuid('org.openmrs.module.emrapi', 'emr.primaryIdentifierType');
 update temp_warnings t 
