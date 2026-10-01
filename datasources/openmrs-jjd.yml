@@ -5,4 +5,4 @@ databaseName: ${datasources.openmrs.jjd.databaseName}
 user: ${datasources.openmrs.jjd.user}
 password: ${datasources.openmrs.jjd.password}
 options: ${datasources.openmrs.jjd.options}
-containerName: ${datasources.openmrs.jjd.containerName}
+containerName: ${datasources.openmrs.jjd.containerName:}
