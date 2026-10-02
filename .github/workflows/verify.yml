@@ -6,17 +6,25 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [ ubuntu-latest ]
+        java-version: [ 8 ]
+
+    runs-on: ${{ matrix.platform }}
+    env:
+      PLATFORM: ${{ matrix.platform }}
+      JAVA_VERSION: ${{ matrix.java-version }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 8
+          java-version: ${{ matrix.java-version }}
           cache: 'maven'
       - name: Build with Maven
-        run: mvn clean verify --batch-mode --file pom.xml
-      # The image CI publishes from target/docker (not pushed here).
-      - name: Build the Docker image
-        run: docker build target/docker
+        id: build_with_maven
+        run: |
+          mvn clean verify --batch-mode --file pom.xml
