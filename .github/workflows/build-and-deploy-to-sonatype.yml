@@ -19,6 +19,7 @@ jobs:
       notify_ci_dashboard: true
     secrets: inherit
 
+  # legacy kouka server, until the jjd-ci instance replaces it (TASKS-556)
   deploy-to-kouka:
     if: github.repository_owner == 'PIH'
     needs: build-and-publish
@@ -30,5 +31,18 @@ jobs:
       runner-label: kouka
       puppet-manifest: petl
       run-etl: true
+      notify_ci_dashboard: true
+    secrets: inherit
+
+  deploy-to-jjd-ci:
+    if: github.repository_owner == 'PIH'
+    needs: build-and-publish
+    concurrency:
+      group: deploy-to-jjd-ci-${{ github.ref }}
+      cancel-in-progress: true
+    uses: PIH/openmrs-contrib-distro-tools/.github/workflows/run-petl-via-runner.yml@main
+    with:
+      runner-label: appclstr-01
+      instance: jjd-ci
       notify_ci_dashboard: true
     secrets: inherit
