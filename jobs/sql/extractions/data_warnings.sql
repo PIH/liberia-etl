@@ -78,8 +78,9 @@ and unknown_patient(p.patient_id) is null;
 insert into temp_reg (patient_id, datetime_entered, creator, warning_type)
 select patient_id, p.date_created, p.creator, 'missing country or county'
 from patient p
-where person_address_country(p.patient_id ) is null
-or (person_address_state_province(p.patient_id) is null and  person_address_country(p.patient_id ) = 'Liberia');
+where p.voided = 0
+and (person_address_country(p.patient_id ) is null
+	or (person_address_state_province(p.patient_id) is null and  person_address_country(p.patient_id ) = 'Liberia'));
 
 drop temporary table if exists temp_ids;
 CREATE TEMPORARY TABLE temp_ids AS
@@ -181,6 +182,15 @@ inner join temp_latest_encounter le on le.patient_id = p.person_id
 inner join encounter e on e.patient_id = le.patient_id and le.latest_datetime = e.encounter_datetime
 where timestampdiff(YEAR, p.birthdate , encounter_datetime) >105
 ;
+
+-- --------------------------------------------------------- exclude voided patients (LIB-427)
+-- all_patients only includes non-voided patients (patient.voided = 0), so remove any
+-- warning whose patient is voided or missing. Covers every warning type above.
+delete t from temp_warnings t
+where not exists
+	(select 1 from patient p
+	where p.patient_id = t.patient_id
+	and p.voided = 0);
 
 -- ------------------------- common fields
 -- emr_id
