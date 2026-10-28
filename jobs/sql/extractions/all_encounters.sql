@@ -134,7 +134,8 @@ set t.next_appt_date = o.next_appt_date,
 
 UPDATE temp_all_encounters t 
 set retrospective = 
-  IF(TIME_TO_SEC(datetime_entered) - TIME_TO_SEC(encounter_datetime) > 1800,1,0);
+  -- entered more than 30 minutes after the encounter datetime (full datetime, so later-day entries count)
+  IF(TIMESTAMPDIFF(SECOND, encounter_datetime, datetime_entered) > 1800,1,0);
 
 UPDATE temp_all_encounters t 
 set entry_lag_hours = TIMESTAMPDIFF(HOUR, encounter_datetime, datetime_entered)
