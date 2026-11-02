@@ -76,3 +76,16 @@ set t.index_asc = i.index_asc,
     t.index_desc = i.index_desc
 from all_programs t inner join #derived_indexes i on i.patient_program_id = t.patient_program_id
 ;
+-- update index asc/desc on mh_medications table (per patient and drug)
+drop table if exists #derived_indexes;
+select  obs_group_id,
+        ROW_NUMBER() over (PARTITION by patient_id, drug_short_name order by encounter_date, encounter_id, obs_group_id) as index_asc,
+        ROW_NUMBER() over (PARTITION by patient_id, drug_short_name order by encounter_date DESC, encounter_id DESC, obs_group_id DESC) as index_desc
+into    #derived_indexes
+from    mh_medications;
+
+update t
+set t.index_asc = i.index_asc,
+    t.index_desc = i.index_desc
+from mh_medications t inner join #derived_indexes i on i.obs_group_id = t.obs_group_id
+;
