@@ -102,59 +102,7 @@ set route = obs_from_group_id_value_coded_list(t.obs_group_id, 'PIH','12651','en
 update temp_mh_meds t
 set additional_medication_comments = obs_value_text(t.encounter_id, 'PIH','10637');
 
-drop temporary table if exists temp_mh_meds_index_asc;
-CREATE TEMPORARY TABLE temp_mh_meds_index_asc
-(
-    SELECT
-            meds_id,
-            patient_id,
-            drug_short_name,
-            encounter_id,
-            index_asc
-FROM (SELECT
-            @r:= IF(@u = drug_short_name, @r + 1,1) index_asc,
-            drug_short_name,
-            encounter_id,
-            patient_id,
-            meds_id,
-            @u:= drug_short_name
-      FROM temp_mh_meds tm,
-                    (SELECT @r:= 1) AS r,
-                    (SELECT @u:= 0) AS u
-            ORDER BY patient_id ASC, drug_short_name ASC, encounter_id ASC
-        ) index_ascending );
-
-CREATE INDEX tmia_e ON temp_mh_meds_index_asc(encounter_id);
-update temp_mh_meds tm
-inner join temp_mh_meds_index_asc tmia on tmia.meds_id = tm.meds_id
-set tm.index_asc = tmia.index_asc;
-
-drop temporary table if exists temp_mh_meds_index_desc;
-CREATE TEMPORARY TABLE temp_mh_meds_index_desc
-(
-    SELECT
-            meds_id,
-            patient_id,
-            drug_short_name,
-            encounter_id,
-            index_desc
-FROM (SELECT
-            @r:= IF(@u = drug_short_name, @r + 1,1) index_desc,
-            drug_short_name,
-            patient_id,
-            encounter_id,
-            meds_id,
-            @u:= drug_short_name
-      FROM temp_mh_meds,
-                    (SELECT @r:= 1) AS r,
-                    (SELECT @u:= 0) AS u
-            ORDER BY patient_id DESC, drug_short_name DESC, encounter_id DESC
-        ) index_descending );
-
-CREATE INDEX tmid_e ON temp_mh_meds_index_desc(encounter_id);
-update temp_mh_meds mm
-inner join temp_mh_meds_index_desc tmid on tmid.meds_id = mm.meds_id
-set mm.index_desc = tmid.index_desc;
+-- index_asc / index_desc are calculated in the warehouse (derivations/update_index.sql)
 
 select
     concat(@partition,"-",patient_id) patient_id,
