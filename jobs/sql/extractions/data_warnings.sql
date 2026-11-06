@@ -183,6 +183,20 @@ inner join encounter e on e.patient_id = le.patient_id and le.latest_datetime = 
 where timestampdiff(YEAR, p.birthdate , encounter_datetime) >105
 ;
 
+-- --------------------------------------------------------- MH enrollment with blank mh_mrn (LIB-436)
+-- any non-voided Mental Health program enrollment where the patient has no MH patient number
+set @mh_program_id = program('Mental Health');
+set @mh_identifier = '23507d1e-4f22-11ea-9717-645d86728797'; -- mental health patient assign number
+insert into temp_warnings (warning_type, event_type, event_datetime, patient_id, patient_program_id, datetime_entered, creator, other_details)
+select 'blank mh_mrn', 'program enrollment', pp.date_enrolled, pp.patient_id, pp.patient_program_id, pp.date_created, pp.creator,
+	if(pp.date_completed is not null,
+		concat('enrollment closed ', date(pp.date_completed), ifnull(concat(', outcome: ', concept_name(pp.outcome_concept_id, 'en')), '')),
+		null)
+from patient_program pp
+where pp.program_id = @mh_program_id
+and pp.voided = 0
+and patient_identifier(pp.patient_id, @mh_identifier) is null;
+
 -- --------------------------------------------------------- exclude voided patients (LIB-427)
 -- all_patients only includes non-voided patients (patient.voided = 0), so remove any
 -- warning whose patient is voided or missing. Covers every warning type above.
@@ -214,7 +228,7 @@ set user_entered = person_name_of_user(creator);
 
 -- event datetime
 update temp_warnings t 
-set event_datetime = coalesce(encounter_datetime, visit_date_started, datetime_entered);
+set event_datetime = coalesce(event_datetime, encounter_datetime, visit_date_started, datetime_entered);
 
 -- final select
 select
