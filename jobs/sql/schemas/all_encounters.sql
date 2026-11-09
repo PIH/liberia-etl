@@ -4,6 +4,7 @@ CREATE TABLE all_encounters (
     visit_id            VARCHAR(50),
     emr_id              VARCHAR(50),
     encounter_type      VARCHAR(50),
+    encounter_type_uuid CHAR(38),
     encounter_location  VARCHAR(255),
     provider            TEXT,
     provider_role       VARCHAR(255),
